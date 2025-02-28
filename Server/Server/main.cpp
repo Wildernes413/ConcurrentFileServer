@@ -1,5 +1,6 @@
 #include <iostream>
 #include <WinSock2.h>
+#include <fstream>
 #pragma comment(lib,"ws2_32.lib")
 
 DWORD WINAPI thread_func(LPVOID lpParameter)
@@ -7,15 +8,15 @@ DWORD WINAPI thread_func(LPVOID lpParameter)
 		SOCKET client_scoket = *(SOCKET*)lpParameter;
 		free(lpParameter);
 	while (1)
-	{
-		char buffer[1024] = { 0 };
-		int ret = recv(client_scoket, buffer, sizeof(buffer), 0);
+	{		
+		char choice[1024] = { 0 };
+		int ret = recv(client_scoket, choice, sizeof(choice), 0);
 		if (ret <=0 ) {
 			break;
 		}
-		std::cout << (int)client_scoket << ":" << buffer << std::endl;
+		std::cout << (int)client_scoket << ":" << choice << std::endl;
 		char success[] = "Sent Successfully";
-		send(client_scoket, success, sizeof(success),0);
+		//send(client_scoket, success, sizeof(success),0);
 	}
 	std::cout << "Socket:" << (int)client_scoket << "disconnect" << std::endl;
 	closesocket(client_scoket);

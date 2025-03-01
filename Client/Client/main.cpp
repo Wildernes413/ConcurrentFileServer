@@ -4,6 +4,23 @@
 #include <vector>
 #pragma comment(lib,"ws2_32.lib")
 using namespace std;
+vector<char> Upload(const string& filename)
+{
+	// 以二进制打开文件，并移动到文件末尾
+	ifstream file(filename, ios::ate | ios::binary);
+	if (!file) {
+		throw runtime_error("Failed to open the file:" + filename);
+	}
+	// 获取文件大小
+	streamsize filesize = file.tellg();
+	// 移动到文件开头
+	file.seekg(0, ios::beg);
+	vector<char> buffer(filesize);
+	if (!file.read(buffer.data(), filesize)) {
+		throw runtime_error("Failed to read the file:" + filename);
+	}
+	return buffer;
+}
 int main()
 {
 	//开启网络权限
@@ -35,22 +52,33 @@ int main()
 		cin >> sbuffer;
 
 		char rbuffer[1024] = { 0 };
-		if (strcmp(sbuffer, "上传文件") == 0) {							
+		if (strcmp(sbuffer, "上传文件") == 0) {
 			send(client_socket, sbuffer, sizeof(sbuffer), 0);
 			cout << "请输入您要上传的文件地址" << endl;
-			cin >> sbuffer;												//sbuffer：要上传的文件地址
-			Upload(sbuffer);
+			cin >> sbuffer; // sbuffer：要上传的文件地址
+
+			// 发送文件路径
 			send(client_socket, sbuffer, sizeof(sbuffer), 0);
+
+			// 读取文件内容
+			vector<char> fileContent = Upload(sbuffer);
+
+			// 发送文件大小
+			uint64_t fileSize = fileContent.size();
+			send(client_socket, reinterpret_cast<char*>(&fileSize), sizeof(fileSize), 0);
+
+			// 发送文件内容
+			send(client_socket, fileContent.data(), fileContent.size(), 0);
 		}
 		else if (strcmp(sbuffer, "下载文件") == 0) {
 			send(client_socket, sbuffer, sizeof(sbuffer), 0);
-			cout << "请选择您要下载的文件" << endl;			
-			int ret = recv(client_socket, rbuffer, sizeof(rbuffer), 0);			//rbuffer:可供下载的文件
+			cout << "请选择您要下载的文件" << endl;
+			int ret = recv(client_socket, rbuffer, sizeof(rbuffer), 0); // rbuffer:可供下载的文件
 			if (ret <= 0) break;
 			cout << rbuffer << std::endl;
-			cin >> sbuffer;												//sbuffer:要下载的文件
-			int ret = recv(client_socket, rbuffer, sizeof(rbuffer), 0);
-			if (ret <= 0) break;												//rbuffer:文件
+			cin >> sbuffer; // sbuffer:要下载的文件
+			ret = recv(client_socket, rbuffer, sizeof(rbuffer), 0);
+			if (ret <= 0) break; // rbuffer:文件
 		}
 		else {
 			cout << "无效的输入，请输入“上传”或“下载”以继续。" << endl;
@@ -58,21 +86,4 @@ int main()
 	}
 	closesocket(client_socket);
 	return 0;
-}
-vector<char> Upload(const string filename)
-{
-	//以二进制打开文件，并移动到文件末尾
-	ifstream file(filename, ios::ate | ios::binary);
-	if (!file) {
-		throw runtime_error("Failed to open the file:" + filename);
-	}
-	//获取文件大小
-	streamsize filesize = file.tellg();
-	//移动到文件开头
-	file.seekg(0, ios::beg);
-	vector<char>buffer(filesize);
-	if (!file.read(buffer.data(), filesize)) {
-		throw runtime_error("Failed to read the file:" + filename);
-	}
-	return buffer;
 }

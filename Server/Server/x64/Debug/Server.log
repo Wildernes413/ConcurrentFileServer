@@ -1,0 +1,5 @@
+﻿  main.cpp
+D:\C++\ConcurrentFileServer\Server\Server\main.cpp(57,43): warning C4244: “参数”: 从“uint64_t”转换到“int”，可能丢失数据
+D:\C++\ConcurrentFileServer\Server\Server\main.cpp(73,86): warning C4244: “参数”: 从“uint64_t”转换到“int”，可能丢失数据
+D:\C++\ConcurrentFileServer\Server\Server\main.cpp(104,45): warning C4244: “参数”: 从“std::streamsize”转换到“int”，可能丢失数据
+  Server.vcxproj -> D:\C++\ConcurrentFileServer\Server\x64\Debug\Server.exe

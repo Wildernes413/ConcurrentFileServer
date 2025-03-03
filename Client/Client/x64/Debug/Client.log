@@ -1,3 +1,4 @@
-﻿  Client.cpp
-D:\ConcurrentFileServer\Client\Client.cpp(27,30): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+﻿  user.cpp
+D:\ConcurrentFileServer\Client\user.cpp(15,41): warning C4244: “参数”: 从“uint64_t”转换到“int”，可能丢失数据
+D:\ConcurrentFileServer\Client\user.cpp(26,49): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
   Client.vcxproj -> D:\ConcurrentFileServer\Client\x64\Debug\Client.exe

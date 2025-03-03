@@ -1,7 +1,7 @@
 #include "client.h"
 #include "file_handler.h"
 #include <iostream>
-
+#include "user.h"
 FileClient::FileClient() : client_socket(INVALID_SOCKET) {
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -37,6 +37,7 @@ bool FileClient::Connect(const std::string& ip, int port) {
 }
 
 void FileClient::Run() {
+    User::LoginAndRegister(client_socket);
     while (true) {
         char sbuffer[1024] = { 0 };
         std::cout << "请选择您要执行的操作：" << std::endl

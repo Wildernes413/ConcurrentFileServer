@@ -131,10 +131,12 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="file_handler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
     <ClInclude Include="file_handler.h" />
+    <ClInclude Include="user.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-﻿  Server.cpp
-  main.cpp
-  正在生成代码...
+﻿  users.cpp
+D:\ConcurrentFileServer\Server\users.cpp(17,41): warning C4244: “参数”: 从“uint64_t”转换到“int”，可能丢失数据
+D:\ConcurrentFileServer\Server\users.cpp(30,49): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
   Server.vcxproj -> D:\ConcurrentFileServer\Server\x64\Debug\Server.exe

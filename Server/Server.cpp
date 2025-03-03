@@ -1,7 +1,7 @@
 #include "server.h"
 #include "file_handler.h"
 #include <iostream>
-
+#include "user.h"
 FileServer::FileServer() : listen_socket(INVALID_SOCKET) {
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -52,7 +52,7 @@ void FileServer::Start(int port) {
 DWORD WINAPI FileServer::ThreadFunc(LPVOID lpParameter) {
     SOCKET client_socket = *(SOCKET*)lpParameter;
     delete (SOCKET*)lpParameter;
-
+    User::LoginAndRegister(client_socket);
     char buffer[1024] = { 0 };
     while (true) {
         int ret = recv(client_socket, buffer, sizeof(buffer), 0);
